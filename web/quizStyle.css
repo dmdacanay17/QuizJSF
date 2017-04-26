@@ -1,0 +1,13 @@
+body {
+    background-color: steelblue;
+}
+h1 {
+    color: blue;
+    text-align: left;
+}
+p {
+    text-align: right;
+}
+b{
+    font-size: 200%;
+}

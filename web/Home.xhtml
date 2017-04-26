@@ -1,0 +1,48 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+
+    <h:head>
+        <title>Home</title>
+        <link rel="stylesheet" href="style.css"/>
+    </h:head>
+
+    <h:body rendered="true">
+        <a>#{home.username}</a>
+        <h1><h:form><h:commandButton value="Logout" action="#{home.logout()}"/></h:form></h1>
+        <b><h:outputText value="Welcome #{home.firstname} #{home.mi} #{home.lastname}!"/></b>
+        <br/><br/>
+        <h:form>
+            <b><h:outputText value="Select Chapter"/></b><br/>
+            <h:selectOneMenu value = "#{home.chapterSelect}">
+                <f:selectItems value="#{home.getChapterArray()}"/>
+            </h:selectOneMenu>
+            <h:commandButton value = "Go" action = "#{home.quiz()}" />
+            <br/>
+            
+            <p> <h:outputText value="Chapter Summaries"/> </p>
+            <ui:repeat value="#{home.chapterScores}" id="repeat"  var="score" varStatus="currentIndex" rendered="true">
+                <pre>
+                <b><br/><h:outputText value = "Chapter #{score.chapter}"/></b> <br/>
+                
+                <h:outputText value = "Number Correct: "   escape="false"/> 
+                <h:outputText value = "#{score.getNumCorrect()}"   escape="false"/> 
+                <h:outputText value = " / "   escape="false"/> 
+                <h:outputText value = "#{score.numQuestions}"   escape="false"/><br/>
+                
+                <h:outputText value = "Number Attempted: "   escape="false"/> 
+                <h:outputText value = "#{score.numAttempted}"   escape="false"/> 
+                <h:outputText value = " / "   escape="false"/> 
+                <h:outputText value = "#{score.numQuestions}"   escape="false"/><br/>
+                
+                <h:outputText value = "Number Correct of Attempted: "   escape="false"/> 
+                <h:outputText value = "#{score.numCorrect}"   escape="false"/> 
+                <h:outputText value = " / "   escape="false"/> 
+                <h:outputText value = "#{score.numAttempted}"   escape="false"/><br/>
+                </pre>
+            </ui:repeat>
+        </h:form>
+    </h:body>
+</html>

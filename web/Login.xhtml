@@ -1,0 +1,27 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+
+    <h:head>
+        <title>Login</title>
+        <link rel="stylesheet" href="style.css"/>
+    </h:head>
+
+    <h:body rendered="true">
+        <div id="page-wrap">
+        <b>Introduction to Java Programming 10th Edition Quiz Login</b> <br/><br/>
+        <h:graphicImage value="resources/images/cover.jpg" rendered="true" height="200" /><br/><br/>
+        <h:form>
+            <h:outputText value="Username"/><br/>
+            <h:inputText id="username" value="#{login.username}"/><br/><br/>
+            <h:outputText value="Password"/><br/>
+            <h:inputText id="password" value="#{login.password}"/><br/><br/>
+            <h:commandButton value="Login" action="#{login.submit()}"/><br/><br/>
+            <h:outputText value="#{login.flag}"/><br/><br/><br/>
+            <h:outputText value="No Account?"/><br/>
+            <h:commandButton value="Create Account" action="Create?faces-redirect=true"/><br/><br/>
+        </h:form>
+        
+        </div>
+    </h:body>
+</html>

@@ -1,0 +1,38 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+
+    <h:head>
+        <title>Login</title>
+        <link rel="stylesheet" href="style.css"/>
+    </h:head>
+
+    <h:body rendered="true">
+        <b>Create Account</b> <br/><br/>
+        <h:form>
+            <h:outputText value="First Name "/>
+            <h:inputText id="firstname" value="#{create.firstname}"/><br/><br/>
+            <h:outputText value="Last Name "/>
+            <h:inputText id="lastname" value="#{create.lastname}"/><br/><br/>
+            <h:outputText value="Middle Inital "/>
+            <h:inputText id="mi" value="#{create.mi}"/><br/><br/>
+            <h:outputText value="username "/>
+            <h:inputText id="Username" value="#{create.username}"/><br/><br/>
+            <h:outputText value="password "/>
+            <h:inputText id="Password" value="#{create.password}"/><br/><br/>
+            <h:outputText value="Confirm Password "/>
+            <h:inputText id="confirmpassword" value="#{create.confirmPassword}"/><br/><br/>
+            
+            <h:commandButton value="Login" action="#{create.submit()}"/><br/><br/>
+            <pre>
+            <h:outputText value="#{create.flag}"/><br/>
+            </pre>
+            <h:commandButton value="Back to Login" action="#{create.back()}"/><br/><br/>
+        </h:form>
+        
+        
+    </h:body>
+</html>

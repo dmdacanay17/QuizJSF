@@ -1,0 +1,109 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+
+    <h:head>
+        <title>Chapter #{quiz.id}</title>
+        <link rel="stylesheet" href="quizStyle.css"/>
+        <h:outputScript library="javax.faces" name="jsf.js" target="head" />
+    </h:head>
+
+    <h:body rendered="true">
+        <h:form>
+            <p> <h:commandButton value="Logout" action="Login?faces-redirect=true"/></p>
+            <pre><b><h:outputText value="Chapter #{quiz.id}    " /></b></pre>
+            
+            <h:selectOneMenu value = "#{quiz.chapterSelect}">
+                <f:selectItems value="#{quiz.getChapterArray()}"/>
+            </h:selectOneMenu><br/>
+            <h:commandButton value = "select" action = "#{quiz.selectChapter()}" /> 
+        </h:form>
+    
+        <h:panelGroup id = "panelgroup" rendered="true">
+            <h:form>
+            <ui:repeat value="#{quiz.getQuestionsArray(quiz.id)}" id="repeat"  var="question" varStatus="currentIndex"  rendered="true">
+
+                <h:form rendered="true" id="form">
+                    <f:ajax rendered="true" >
+
+                        <pre> <h:outputText value = "#{question.questionText}"   escape="false"/> 
+
+                    <h:selectOneRadio value="#{question.selectedRadio}" rendered="#{question.getAnswerKeyLength() == 1  and question.getNumOptions()== 2 }" layout="pageDirection">
+                        <f:selectItem itemValue="A" itemLabel="#{question.choiceA}"/>
+                        <f:selectItem itemValue="B" itemLabel="#{question.choiceB}"/>
+                    </h:selectOneRadio>
+                    
+                    <h:selectOneRadio value="#{question.selectedRadio}" rendered="#{question.getAnswerKeyLength() == 1  and question.getNumOptions()== 3 }" layout="pageDirection" >
+                        <f:selectItem itemValue="A" itemLabel="#{question.choiceA}"/>
+                        <f:selectItem itemValue="B" itemLabel="#{question.choiceB}"/>
+                        <f:selectItem itemValue="C" itemLabel="#{question.choiceC}"/>
+                    </h:selectOneRadio>
+                    
+                    <h:selectOneRadio value="#{question.selectedRadio}" rendered="#{question.getAnswerKeyLength() == 1  and question.getNumOptions()== 4 }" layout="pageDirection">
+                       <f:selectItem itemValue="A" itemLabel="#{question.choiceA}"/>
+                       <f:selectItem itemValue="B" itemLabel="#{question.choiceB}"/>
+                       <f:selectItem itemValue="C" itemLabel="#{question.choiceC}"/>
+                       <f:selectItem itemValue="D" itemLabel="#{question.choiceD}"/>
+                    </h:selectOneRadio>
+
+                    <h:selectOneRadio value="#{question.selectedRadio}" rendered="#{question.getAnswerKeyLength() == 1  and question.getNumOptions()== 5 }" layout="pageDirection">
+                        <f:selectItem itemValue="A" itemLabel="#{question.choiceA}"/>
+                        <f:selectItem itemValue="B" itemLabel="#{question.choiceB}"/>
+                        <f:selectItem itemValue="C" itemLabel="#{question.choiceC}"/>
+                        <f:selectItem itemValue="D" itemLabel="#{question.choiceD}"/>
+                        <f:selectItem itemValue="E" itemLabel="#{question.choiceE}"/>
+                    </h:selectOneRadio>
+
+
+
+                                <h:selectManyCheckbox value="#{question.selectedCheck}" rendered = "#{question.getAnswerKeyLength() > 1 and question.getNumOptions()== 2}" layout="pageDirection">
+                                    <f:selectItem itemValue="A" itemLabel="#{question.choiceA}"/>
+                                    <f:selectItem itemValue="B" itemLabel="#{question.choiceB}"/>
+                                </h:selectManyCheckbox>
+
+                                <h:selectManyCheckbox value="#{question.selectedCheck}" rendered = "#{question.getAnswerKeyLength() > 1 and question.getNumOptions()== 3}" layout="pageDirection">
+                                    <f:selectItem itemValue="A" itemLabel="#{question.choiceA}"/>
+                                    <f:selectItem itemValue="B" itemLabel="#{question.choiceB}"/>
+                                    <f:selectItem itemValue="C" itemLabel="#{question.choiceC}"/>
+                                </h:selectManyCheckbox>
+
+                                <h:selectManyCheckbox value="#{question.selectedCheck}"  rendered = "#{question.getAnswerKeyLength() > 1 and question.getNumOptions()== 4}" layout="pageDirection">
+                                    <f:selectItem itemValue="A" itemLabel="#{question.choiceA}"/>
+                                    <f:selectItem itemValue="B" itemLabel="#{question.choiceB}"/>
+                                    <f:selectItem itemValue="C" itemLabel="#{question.choiceC}"/>
+                                    <f:selectItem itemValue="D" itemLabel="#{question.choiceD}"/>
+                                </h:selectManyCheckbox>
+
+                                <h:selectManyCheckbox value="#{question.selectedCheck}" rendered = "#{question.getAnswerKeyLength() > 1 and question.getNumOptions()== 5}" layout="pageDirection">
+                                    <f:selectItem itemValue="A" itemLabel="#{question.choiceA}"/>
+                                    <f:selectItem itemValue="B" itemLabel="#{question.choiceB}"/>
+                                    <f:selectItem itemValue="C" itemLabel="#{question.choiceC}"/>
+                                    <f:selectItem itemValue="D" itemLabel="#{question.choiceD}"/>
+                                    <f:selectItem itemValue="E" itemLabel="#{question.choiceE}"/>
+                                </h:selectManyCheckbox>
+                                
+                                <h:outputLabel  value= "  Hint: #{question.hint}" rendered="#{question.hint.trim().length() > 1}"/><br/>
+
+                                <h:graphicImage value="resources/images/check.png" rendered="#{question.getIsCorrect() and question.getChapterNo()!=-1}" height="50" />
+                                <h:graphicImage value="resources/images/xmark.gif" rendered="#{!question.getIsCorrect() and question.isAttempted}" height="50" /><br/>
+                                <h:commandButton value = "submit" actionListener = "#{quiz.click(currentIndex.index)}" rendered="#{!question.getIsCorrect()}" id="button"  >
+                                    <f:param name="id" value="#{quiz.id}" /> 
+                                    <f:ajax execute="@form" render="@form"  />
+                                </h:commandButton>
+                            </pre>
+                        </f:ajax>
+                    </h:form>
+                </ui:repeat>
+                <h:commandButton value = "submit" actionListener = "#{quiz.clickAll()}">
+                    <f:param name="id" value="#{quiz.id}" /> 
+                    <f:ajax execute="@form" render="@form" />
+                </h:commandButton>
+            </h:form>
+        </h:panelGroup>
+
+
+    </h:body>
+</html>
